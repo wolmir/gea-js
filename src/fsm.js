@@ -7,7 +7,6 @@ var MaquinaDeEstados = Classe({
 	__init__: function(self) {
 		self.estado_atual    = null;
 		self.estado_global   = null;
-		self.estado_anterior = null;
 	},
 
 	setEstadoGlobal: function(self, estado) {
@@ -28,7 +27,7 @@ var MaquinaDeEstados = Classe({
 		}
 	},
 
-	mudarEstado: function(self, estado) {
+	assertEstado: function(self, estado) {
 		if (!estado) {
 			throw new Error('MaquinaDeEstados::setEstadoGlobal >> "estado" não pode ser null ou undefined.');
 		}
@@ -36,6 +35,10 @@ var MaquinaDeEstados = Classe({
 		if (!self.__ehEstado(estado)) {
 			throw new Error('MaquinaDeEstados::setEstadoGlobal >> "estado" deve ser um objeto do tipo Estado.');
 		}
+	},
+
+	mudarEstado: function(self, estado) {
+		self.assert(estado);
 
 		if (self.estado_atual) {
 			self.estado_atual.sair();
