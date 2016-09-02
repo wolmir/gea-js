@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/wolmir/gea-js#readme",
   "dependencies": {
+    "pyoo.js": "^2.0.1",
     "webpack": "^1.13.2"
   }
 }
