@@ -17,8 +17,8 @@ var Estado = Classe({
 		throw new Error('Estado::sair >> Método não implementado.');
 	},
 
-	atualizar: function(self) {
-		throw new Error('Estado::atualizar >> Método não implementado.');
+	atualizar: function(self, info, mudarEstado) {
+		
 	},
 
 	receberMensagem: function(self, msg) {
