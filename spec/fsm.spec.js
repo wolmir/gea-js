@@ -173,5 +173,26 @@ describe('Uma máquina de estados', function() {
 		}
 
 		expect(teste3().status).toBe('Em alarme!');
+
+		function teste4() {
+			var robo = RoboDomestico();
+			robo.atualizar('limpar');
+			robo.atualizar('alarme');
+			robo.atualizar('desligar alarme');
+			return robo;
+		}
+
+		expect(teste4().status).toBe('Limpando!');
+
+		function teste5() {
+			var robo = RoboDomestico();
+			robo.atualizar('limpar');
+			robo.atualizar('descansar');
+			robo.atualizar('alarme');
+			robo.atualizar('desligar alarme');
+			return robo; 
+		}
+
+		expect(teste5().status).toBe('Descansando!');
 	});
 });
