@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/wolmir/gea-js#readme",
   "dependencies": {
+    "lodash": "^4.15.0",
     "pyoo.js": "^2.2.0",
     "webpack": "^1.13.2"
   }
