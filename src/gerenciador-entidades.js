@@ -15,7 +15,11 @@ var GerenciadorEntidades = Classe({
 
 	getEntidade: function(self, id) {
 		return self.entidades[id];
-	}
+	},
+
+	getTodasEntidades: function(self) {
+		return self.entidades;
+	},
 
 	removerEntidade: function(self, id) {
 		if (self.entidades[id]) {
