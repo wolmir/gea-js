@@ -1,5 +1,5 @@
 require('./telegrama');
-require('./gerenciador-entidades');
+require('./fonte');
 
 var Classe = require('pyoo.js');
 var _ = require('lodash');
@@ -8,6 +8,10 @@ var DestinatarioNaoEncontradoException = Classe({
 	__init__: function(self, destinatario) {
 		self.nome = 'DestinatarioNaoEncontradoException';
 		self.destinatario = destinatario;
+	},
+
+	erro: function(self) {
+		return new Error(self.nome + ' >> agente id: ' + self.destinatario + ' não foi encontrado!');
 	}
 });
 
@@ -15,15 +19,15 @@ var Correio = Classe({
 
 	BROADCAST: 'BROADCAST',
 
-	__init__: function(self, gerenciador_entidades) {
-		self.gerenciador_entidades = gerenciador_entidades;
+	__init__: function(self, fonte) {
+		self.fonte = fonte;
 	},
 
 	__despachar: function(self, telegrama) {
-		var destino = self.gerenciador_entidades.getEntidade(telegrama.destinatario);
+		var destino = self.fonte.getAgente(telegrama.destinatario);
 
 		if (!destino) {
-			throw DestinatarioNaoEncontradoException();
+			throw DestinatarioNaoEncontradoException(telegrama.destinatario).erro();
 		}
 
 		destino.receberMensagem(telegrama);
@@ -31,9 +35,12 @@ var Correio = Classe({
 
 	despachar: function(self, telegrama) {
 		if (telegrama.tempo_despacho > 0) {
-			setTimeout(function() {self.__despachar(telegrama)}, telegrama.tempo_despacho);
+			setTimeout(function() {
+				telegrama.tempo_despacho = 0;
+				self.despachar(telegrama)
+			}, telegrama.tempo_despacho);
 		} else if (telegrama.destinatario === Correio.BROADCAST) {
-			var entidades = self.gerenciador_entidades.getTodasEntidades();
+			var entidades = self.fonte.getTodosAgentes();
 			_(entidades).each(function(entidade, id) {
 				self.__despachar(_.assign({}, telegrama, {destinatario: id}));
 			});

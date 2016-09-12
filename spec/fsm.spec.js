@@ -8,12 +8,12 @@ describe('Uma máquina de estados', function() {
 
 	it('deve trocar estados corretamente', function() {
 		var Acesa = Classe(gea.Estado, {
-			__init__: function(self, entidade) {
-				gea.Estado.__init__(self, entidade);
+			__init__: function(self, agente) {
+				gea.Estado.__init__(self, agente);
 			},
 
 			entrar: function(self) {
-				self.entidade.acesa = true;
+				self.agente.acesa = true;
 			},
 
 			sair: function(self) {
@@ -22,12 +22,12 @@ describe('Uma máquina de estados', function() {
 		});
 
 		var Apagada = Classe(gea.Estado, {
-			__init__: function(self, entidade) {
-				gea.Estado.__init__(self, entidade);
+			__init__: function(self, agente) {
+				gea.Estado.__init__(self, agente);
 			},
 
 			entrar: function(self) {
-				self.entidade.acesa = false;
+				self.agente.acesa = false;
 			},
 
 			sair: function(self) {
@@ -60,54 +60,54 @@ describe('Uma máquina de estados', function() {
 
 	it('deve permitir comportamentos de alarme', function() {
 		var Alarme = Classe(gea.Estado, {
-			__init__: function(self, entidade) {
-				gea.Estado.__init__(self, entidade);
+			__init__: function(self, agente) {
+				gea.Estado.__init__(self, agente);
 			},
 
 			atualizar: function(self, info, mudarEstado) {
 				if (info === 'desligar alarme') {
-					self.entidade.fsm.reverter();
+					self.agente.fsm.reverter();
 				}
 			},
 
 			entrar: function(self) {
-				self.entidade.status = 'Em alarme!';
+				self.agente.status = 'Em alarme!';
 			},
 
 			sair: function(self) {}
 		});
 
 		var StandBy = Classe(gea.Estado, {
-			__init__: function(self, entidade) {
-				gea.Estado.__init__(self, entidade);
+			__init__: function(self, agente) {
+				gea.Estado.__init__(self, agente);
 			},
 
 			atualizar: function(self, info, mudarEstado) {
 				if (info === 'limpar') {
-					mudarEstado(Limpando(self.entidade));
+					mudarEstado(Limpando(self.agente));
 				}
 			},
 
 			entrar: function(self) {
-				self.entidade.status = 'Descansando!';
+				self.agente.status = 'Descansando!';
 			},
 
 			sair: function(self) {}
 		});
 
 		var Limpando = Classe(gea.Estado, {
-			__init__: function(self, entidade) {
-				gea.Estado.__init__(self, entidade);
+			__init__: function(self, agente) {
+				gea.Estado.__init__(self, agente);
 			},
 
 			atualizar: function(self, info, mudarEstado) {
 				if (info === 'descansar') {
-					mudarEstado(StandBy(self.entidade));
+					mudarEstado(StandBy(self.agente));
 				}
 			},
 
 			entrar: function(self) {
-				self.entidade.status = 'Limpando!';
+				self.agente.status = 'Limpando!';
 			},
 
 			sair: function(self) {}
@@ -115,16 +115,16 @@ describe('Uma máquina de estados', function() {
 
 
 		var Tranquilo = Classe(gea.Estado, {
-			__init__: function(self, entidade) {
-				gea.Estado.__init__(self, entidade);
+			__init__: function(self, agente) {
+				gea.Estado.__init__(self, agente);
 				self.fsm = gea.Maquina();
-				self.fsm.mudarEstado(StandBy(self.entidade));
+				self.fsm.mudarEstado(StandBy(self.agente));
 			},
 
 			atualizar: function(self, info, mudarEstado) {
 				self.fsm.atualizar(info);
 				if (info === 'alarme') {
-					mudarEstado(Alarme(self.entidade));
+					mudarEstado(Alarme(self.agente));
 				}
 			},
 
