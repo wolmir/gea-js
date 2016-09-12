@@ -1,7 +1,7 @@
 var Classe = require('pyoo.js');
 var Maquina = require('./gea');
 
-var Entidade = Classe({
+var Agente = Classe({
 	__init__: function(self) {
 		self.id = null;
 		self.fsm = Maquina();
@@ -16,4 +16,4 @@ var Entidade = Classe({
 	}
 });
 
-module.exports = Entidade;
+module.exports = Agente;
