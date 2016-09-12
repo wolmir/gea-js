@@ -2,7 +2,7 @@ var gea    = require('../src');
 var Classe = require('pyoo.js');
 
 describe('Estado', function() {
-	it('deve instanciar com uma entidade definida.', function() {
+	it('deve instanciar com uma agente definida.', function() {
 		var tentativa = function() {
 			var EntidadeTeste = Classe({
 				__init__: function(self) {
@@ -17,11 +17,11 @@ describe('Estado', function() {
 	});
 
 
-	it('deve deflagrar um erro ao ser instanciado com uma entidade vazia', function() {
+	it('deve deflagrar um erro ao ser instanciado com um agente vazio', function() {
 		var tentativa = function() {
 			gea.Estado();
 		};
 
-		expect(tentativa).toThrowError('Estado::__init__ >> "entidade" deve ser um objeto definido.');
+		expect(tentativa).toThrowError('Estado::__init__ >> "agente" deve ser um objeto definido.');
 	});
 });
