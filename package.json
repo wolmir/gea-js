@@ -1,6 +1,6 @@
 {
   "name": "gea-js",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A state manager for JS apps using an FSM architecture.",
   "main": "src/index.js",
   "scripts": {
@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/wolmir/gea-js#readme",
   "dependencies": {
+    "lodash": "^4.15.0",
+    "pyoo.js": "^2.2.0",
     "webpack": "^1.13.2"
   }
 }
