@@ -47,6 +47,10 @@ var Correio = Classe({
 		} else {
 			self.__despachar(telegrama);
 		}
+	},
+
+	getFonte: function(self) {
+		return self.fonte;
 	}
 });
 
